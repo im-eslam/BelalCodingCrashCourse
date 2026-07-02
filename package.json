@@ -6,5 +6,6 @@
   "dependencies": {
     "@vercel/kv": "^1.0.1"
   }
-  "test"
-}
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
+  }}
