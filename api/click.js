@@ -8,7 +8,7 @@
 //
 // HOW IT WORKS:
 // - Every click atomically increments one shared counter in
-//   Vercel KV (a free Redis database).
+//   Upstash Redis (a free serverless Redis database).
 // - We divide the total click count by CLICK_BUFFER to figure
 //   out which link "bucket" we're currently in.
 // - Once the last link's bucket is full, we simply keep reusing
@@ -21,7 +21,9 @@
 //   moving to the next one.
 // ==========================================================
 
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
 
 // 🔗 STEP 1: Put your WhatsApp group links here, in order.
 const WHATSAPP_LINKS = [
@@ -44,8 +46,8 @@ export default async function handler(req, res) {
 
   try {
     // Atomically increment the shared, global click counter.
-    // kv.incr is atomic even under heavy concurrent traffic.
-    const totalClicks = await kv.incr("abc:total_clicks");
+    // redis.incr is atomic even under heavy concurrent traffic.
+    const totalClicks = await redis.incr("abc:total_clicks");
 
     // Work out which link "bucket" this click falls into.
     // Clicks 1–125 -> link 0, clicks 126–250 -> link 1, etc.
@@ -61,7 +63,7 @@ export default async function handler(req, res) {
 
     // Also track per-link totals, so /api/stats can show a
     // breakdown of how many clicks each individual link got.
-    await kv.incr(`abc:link:${linkIndex}:clicks`);
+    await redis.incr(`abc:link:${linkIndex}:clicks`);
 
     return res.status(200).json({ url, linkIndex, totalClicks });
   } catch (err) {
