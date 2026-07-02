@@ -27,16 +27,16 @@ const redis = Redis.fromEnv();
 
 // 🔗 STEP 1: Put your WhatsApp group links here, in order.
 const WHATSAPP_LINKS = [
-  "https://chat.whatsapp.com/PLACEHOLDER_LINK_1",
-  "https://chat.whatsapp.com/PLACEHOLDER_LINK_2",
-  "https://chat.whatsapp.com/PLACEHOLDER_LINK_3",
-  "https://chat.whatsapp.com/PLACEHOLDER_LINK_4",
-  "https://chat.whatsapp.com/PLACEHOLDER_LINK_5",
+  "https://chat.whatsapp.com/BfIcZVCiNiTL2cbwnsXHka",
+  "https://chat.whatsapp.com/LsLW6G72lw6DPCS6gE7B3y",
+  "https://chat.whatsapp.com/D4DlPExgLAH14sc9N69ppD",
+  "https://chat.whatsapp.com/GasfTrZYEZZEtNWWHSKN55",
+  "https://chat.whatsapp.com/IruyXF2sbycD8WU3fCMpl2",
 ];
 
 // 🔢 STEP 2: How many clicks each link should receive before
 //    the next one takes over.
-const CLICK_BUFFER = 3;
+const CLICK_BUFFER = 120;
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
