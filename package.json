@@ -1,0 +1,9 @@
+{
+  "name": "ahmed-belal-crash-course-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page for the free 3-day Front-End crash course, with a server-tracked WhatsApp CTA link rotation.",
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
+  }
+}
