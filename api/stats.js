@@ -7,21 +7,23 @@
 //   https://your-domain.vercel.app/api/stats
 //
 // This is read-only — it never changes any numbers, it just
-// reports what's currently stored in Vercel KV.
+// reports what's currently stored in Upstash Redis.
 // ==========================================================
 
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
 
 // Keep this in sync with the number of links in api/click.js
 const LINK_COUNT = 5;
 
 export default async function handler(req, res) {
   try {
-    const totalClicks = (await kv.get("abc:total_clicks")) || 0;
+    const totalClicks = (await redis.get("abc:total_clicks")) || 0;
 
     const perLink = [];
     for (let i = 0; i < LINK_COUNT; i++) {
-      const clicks = (await kv.get(`abc:link:${i}:clicks`)) || 0;
+      const clicks = (await redis.get(`abc:link:${i}:clicks`)) || 0;
       perLink.push({ link: i + 1, clicks });
     }
 
