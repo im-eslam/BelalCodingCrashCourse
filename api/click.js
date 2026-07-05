@@ -36,7 +36,7 @@ const WHATSAPP_LINKS = [
 
 // 🔢 STEP 2: How many clicks each link should receive before
 //    the next one takes over.
-const CLICK_BUFFER = 120;
+const CLICK_BUFFER = 180;
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
